@@ -4,7 +4,8 @@ www.dianmeng.us is a bbs of game development.
 
 ## Getting Started
 
-It's develop with falsk, db with mysql and redis.
+*It's developed with falsk
+*DB with mysql5.7.24 and redis.
 
 ### Prerequisites
 
@@ -12,7 +13,7 @@ It's develop with falsk, db with mysql and redis.
 * Push the project to github.
 
 ```
-Cloud server Vultr Ubuntu 16.04.5 (Python2.7.12 Python3.5.2)
+Cloud server Vultr Ubuntu 18.04 (Python2.7.12 Python3.5.2)
 Develop env python3.6.7
 ```
 
@@ -40,7 +41,7 @@ sudo apt-get install python3-pip
 pip3 -V
 ```
 
-Install Vitualenv then add the 3 lines to the end.
+Install Vitualenv then add the 3 lines to the bashrc.
 ```
 pip3 install virtualenvwrapper
 pip3 install --upgrade virtualenvwrapper
@@ -51,7 +52,30 @@ source /usr/local/bin/virtualenvwrapper.sh
 source ~/.bashrc
 ```
 
-Get Code from GitHub.
+Install Mysql
+```
+apt-get install mysql-server mysql-client
+apt-get install libmysqld-dev
+sudo mysql_secure_installation
+```
+
+Config Mysql
+```
+sudo apt-get remove mysql-common
+sudo apt-get autoremove --purge xxxxx
+dpkg --list|grep mysql
+dpkg -l|grep^rc|awk'{print $2}'|sudo xargs dpkg -P
+
+sudo mysql -udebian-sys-maint -p2HLouPngmLxvuI5o
+set global validate_password_policy=0;
+set global validate_password_length=4;
+update user set authentication_string=PASSWORD("xxx") where user='root';
+update user set plugin="mysql_native_password";
+flush privileges;
+quit;
+```
+
+Get project from GitHub.
 ```
 mkdir -p /opt/app_server/DianMeng
 cd /opt/app_server/DianMeng
@@ -67,12 +91,33 @@ git reset --hard HEAD
 git pull origin master
 ```
 
-And repeat
+Serve flask application
+```
+mkvirtualenv flask-env-py3 -p python3
+workon flask-env-py3
+(flask-env-py3)pip3 install -r requirements.txt
+app.run(host='0.0.0.0',port=5000)
+```
 
+And repeat
 ```
 until finished
 ```
 
+And repeat
+```
+until finished
+```
+
+And repeat
+```
+until finished
+```
+
+And repeat
+```
+until finished
+```
 Creating a Python Virtual Environment
 ```
 until finished
