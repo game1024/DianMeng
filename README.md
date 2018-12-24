@@ -1,6 +1,6 @@
-# Project Title
+# DianMeng BBS
 
-One Paragraph of project description goes here
+www.dianmeng.us is a bbs about game development,It's develop with falsk.
 
 ## Getting Started
 
@@ -72,7 +72,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Ming Zhao** - *Initial work* - [PurpleBooth](https://github.com/game102)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
