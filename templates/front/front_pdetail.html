@@ -1,0 +1,77 @@
+{% extends 'front/front_base.html' %}
+{% from 'common/_macros.html' import static %}
+
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+
+{% block head %}
+    <!-- include summernote css/js -->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
+    <script src="{{ static('front/js/front_pdetail.js') }}"></script>
+    <link rel="stylesheet" href="{{ static('front/css/front_pdetail.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="main-container">
+        <div class="post-container">
+            <h2>{{ post.title }}</h2>
+            <p class="post-info-group">
+                <span>发表时间:{{ post.create_time }}</span>
+                <span>作者:    {{ post.author.username }}</span>
+                <span>所属板块:{{ post.board.name }}</span>
+                <span>阅读:  {{ post.read_num }}</span>
+                <span>评论: {{ post.comment_num }}</span>
+            </p>
+            <hr>
+            <article class="post-content" id="post-content" data-id="{{ post.id }}">
+                {{ post.content|safe }}
+            </article>
+        </div>
+
+        <div class="comment-group">
+            <h3 class="comment-title"><a name="list">评论列表</a></h3>
+            <ul class="comment-list-group">
+                {% for comment in post.comments %}
+                    <li>
+                        <div class="avatar-group">
+                            <img src="{{ comment.author.avatar  or static('common/images/logo.png')}}" alt="">
+                        </div>
+                        <div class="comment-content">
+                            <p class="author-info">
+                                <span>{{ comment.author.username }}</span>
+                                <span>{{ comment.create_time }}</span>
+                            </p>
+                            <p class="comment-txt">
+                                {{ comment.content|safe }}
+                            </p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="add-comment-group">
+            <h3>发表评论</h3>
+
+            <textarea id="summernote" name="editordata"></textarea>
+
+            <div class="comment-btn-group">
+                <button class="btn btn-primary" id="comment-btn">发表评论</button>
+            </div>
+        </div>
+    </div>
+{#    <div class="sm-container">#}
+{#        <div class="author-group">#}
+{#            <a href="#">#}
+{#                <img class="author-avatar" src="{{ post.author.avatar or static('common/images/logo.png') }}" alt="">#}
+{#            </a>#}
+{#            <p class="username">{{ post.author.username }}</p>#}
+{#            <p class="txt">0积分</p>#}
+{#            <div style="text-align:center;margin-top:10px;">#}
+{#                <a href="#" class="btn btn-warning">Ta的主页</a>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{% endblock %}
