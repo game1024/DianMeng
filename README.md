@@ -1,27 +1,89 @@
 # DianMeng BBS
 
-www.dianmeng.us is a bbs about game development,It's develop with falsk.
+www.dianmeng.us is a bbs of game development.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+It's develop with falsk, db with mysql and redis.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+* Create a new server instance.
+* Push the project to github.
 
 ```
-Give examples
+Cloud server Vultr Ubuntu 16.04.5 (Python2.7.12 Python3.5.2)
+Develop env python3.6.7
 ```
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+Install essentials
+```
+sudo apt-get install build-essential checkinstall
+sudo apt-get install libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
+```
 
-Say what the step will be
+Install Python3.6.7 
+```
+cd /opt
+wget https://www.python.org/ftp/python/3.6.7/Python-3.6.7.tgz
+tar -xvf Python-3.6.7.tgz
+cd /opt/Python-3.6.7
+./configure
+make
+sudo make install
+sudo rm /usr/bin/python3
+sudo ln -s /usr/bin/python3.6 /usr/bin/python3
+python3 -V
+sudo apt-get install python3-pip
+pip3 -V
+```
+
+Install Vitualenv then add the 3 lines to the end.
+```
+pip3 install virtualenvwrapper
+pip3 install --upgrade virtualenvwrapper
+vim ~/.bashrc
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.6
+source /usr/local/bin/virtualenvwrapper.sh
+source ~/.bashrc
+```
+
+Get Code from GitHub.
+```
+mkdir -p /opt/app_server/DianMeng
+cd /opt/app_server/DianMeng
+apt install git
+git init
+git remote add origin https://github.com/game102/DianMeng.git
+git pull origin master
+```
+
+If you delete something careless,you can repull
+```
+git reset --hard HEAD
+git pull origin master
+```
+
+And repeat
 
 ```
-Give the example
+until finished
+```
+
+Creating a Python Virtual Environment
+```
+until finished
+```
+
+
+
+And repeat
+
+```
+until finished
 ```
 
 And repeat
