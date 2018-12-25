@@ -122,81 +122,116 @@ Install redis for celery
 sudo add-apt-repository ppa:chris-lea/redis-server
 sudo apt-get update
 sudo apt-get install redis-server
+sudo service redis-server start
 (flask-env-py3)project interpreter-- install redis
-(flask-env-py3)celery worker -A tasks.celery --loglevel=info
+#Start worker as a back ground process
+(flask-env-py3)celery worker -A tasks.celery --loglevel=info -D
 ```
-
-Test Application
-```
-python3 app.py
-app.run(host='0.0.0.0',port=5000)
-```
-
-And repeat
-
-```
-until finished
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+python3 app.py
+app.run(host='0.0.0.0',port=5000)
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+Install uWSGI
+```
+(flask-env-py3)apt-get install gcc
+(flask-env-py3)apt-get install python3-setuptools
+(flask-env-py3)apt-get install python3.6-dev
+(flask-env-py3)pip3 install uwsgi
+```
 
-## Built With
+Test uWSGI
+```
+lsof -i:5000
+kill -9 pid   xxxx
+app.py=>app.run()
+celery worker -A tasks.celery --loglevel=info -D
+uwsgi --socket 0.0.0.0:5000 --protocol=http -w app:app
+```
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+Config uWSGI
+```
+(flask-env-py3)vim /opt/app_server/DianMeng/dianmeng.ini
 
-## Contributing
+[uwsgi]
+module = app:app
+master = true
+processes = 3
+chdir = /opt/app_server/DianMeng
+socket = /opt/app_server/DianMeng/dianmeng.sock
+chmod-socket = 666      
+vacuum = true		
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+#referring to the app.py file
+#start up in master mode
+#spawn 3 worker processes to serve actual requests
+#socket file communication with Nginx
+#can be readed and writed
+#clean up the socket when the process stops
 
-## Versioning
+测试运行
+uwsgi --ini dianmeng.ini
+文件夹/opt/app_server/DianMeng/多了dianmeng.sock文件
+```
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+Install and config Nginx
+```
+apt install nginx  #安装nginx
 
-## Authors
+sudo vim /etc/nginx/sites-available/dianmeng
 
-* **Ming Zhao** - *Initial work* - [PurpleBooth](https://github.com/game102)
+server{
+	listen 80;
+	server_name 149.28.80.27 www.dianmeng.us;
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+	location / {
+		include uwsgi_params;
+		uwsgi_pass unix:/opt/app_server/DianMeng/dianmeng.sock;
+	}
+}
+```
 
-## License
+关联sites-enabled
+```
+sudo ln -s /etc/nginx/sites-available/dianmeng /etc/nginx/sites-enabled
+测试语法
+sudo nginx -t
+重启
+sudo systemctl restart nginx
+测试
+http://149.28.80.27:80
+```
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+Let uWSGI Detect by Systemd
+```
+sudo vim /etc/systemd/system/dianmeng.service
+
+[Unit]
+Description=uWSGI instance to serve DianMeng
+After=syslog.target
+
+[Service]
+ExecStart=/root/.virtualenvs/flask-env-py3/bin/uwsgi --ini /opt/app_server/DianMeng/dianmeng.ini
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+StandardError=syslog
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target
+```
+
+启动服务
+```
+systemctl daemon-reload 
+systemctl start dianmeng
+systemctl status dianmeng
+```
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
-
+* ZhiLiao BBS
