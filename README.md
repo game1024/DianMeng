@@ -4,13 +4,13 @@ www.dianmeng.us is a bbs of game development.
 
 ## Getting Started
 
-*It's developed with falsk
-*DB with mysql5.7.24-0ubuntu0.18.04.1  and redis.
+* It's developed with Falsk
+* DB with mysql5.7.24 and redis.
 
 ### Prerequisites
 
 * Create a new server instance.
-* Push the project to github.
+* Pull the project from github.
 
 ```
 Cloud server Vultr Ubuntu 18.04
