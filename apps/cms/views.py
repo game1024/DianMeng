@@ -105,13 +105,7 @@ def email_captcha():
     source.extend(map(lambda x:str(x), range(0, 10)))
     # source.extend(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"])
     captcha = "".join(random.sample(source, 6))
-
-    # message = Message('BBS论坛邮箱验证码', recipients=[email], body='验证码是:%s'%captcha)
-    # try:
-    #     mail.send(message)
-    # except:
-    #     return restful.server_error()
-
+    #使用Celery异步发送
     send_mail.delay('Reset your cms email of DianMeng.', [email], 'Your captcha is:%s'%captcha)
     dmcache.set(email, captcha)
     return restful.success()
