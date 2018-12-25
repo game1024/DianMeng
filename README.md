@@ -5,7 +5,7 @@ www.dianmeng.us is a bbs of game development.
 ## Getting Started
 
 *It's developed with falsk
-*DB with mysql5.7.24 and redis.
+*DB with mysql5.7.24-0ubuntu0.18.04.1  and redis.
 
 ### Prerequisites
 
@@ -13,7 +13,7 @@ www.dianmeng.us is a bbs of game development.
 * Push the project to github.
 
 ```
-Cloud server Vultr Ubuntu 18.04 (Python2.7.12 Python3.5.2)
+Cloud server Vultr Ubuntu 18.04
 Develop env python3.6.7
 ```
 
@@ -27,17 +27,7 @@ sudo apt-get install libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite
 
 Install Python3.6.7 
 ```
-cd /opt
-wget https://www.python.org/ftp/python/3.6.7/Python-3.6.7.tgz
-tar -xvf Python-3.6.7.tgz
-cd /opt/Python-3.6.7
-./configure
-make
-sudo make install
-sudo rm /usr/bin/python3
-sudo ln -s /usr/bin/python3.6 /usr/bin/python3
-python3 -V
-sudo apt-get install python3-pip
+apt-get install python3-pip
 pip3 -V
 ```
 
@@ -59,20 +49,27 @@ apt-get install libmysqld-dev
 sudo mysql_secure_installation
 ```
 
-Config Mysql
+Config Mysql local
 ```
-sudo apt-get remove mysql-common
-sudo apt-get autoremove --purge xxxxx
-dpkg --list|grep mysql
-dpkg -l|grep^rc|awk'{print $2}'|sudo xargs dpkg -P
-
-sudo mysql -udebian-sys-maint -p2HLouPngmLxvuI5o
+mysql -uroot -p
+use msyql
 set global validate_password_policy=0;
 set global validate_password_length=4;
-update user set authentication_string=PASSWORD("xxx") where user='root';
+update user set authentication_string=PASSWORD("xxxxx") where user='root';
 update user set plugin="mysql_native_password";
 flush privileges;
-quit;
+quit
+```
+
+Grant mysql remote access
+```
+mysql -uroot -p  
+CREATE USER 'username'@'%' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'username'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+vi /etc/mysql/mysql.conf.d/mysqld.cnf
+comment the bind-address = 127.0.0.1
+sudo service mysql restart
 ```
 
 Get project from GitHub.
