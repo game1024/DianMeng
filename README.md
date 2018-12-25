@@ -88,39 +88,49 @@ git reset --hard HEAD
 git pull origin master
 ```
 
-Serve flask application
+Create virtualenv
 ```
 mkvirtualenv flask-env-py3 -p python3
 workon flask-env-py3
 (flask-env-py3)pip3 install -r requirements.txt
+```
+
+Initialize application
+```
+create database if not exists dianmeng default charset utf8 collate utf8_general_ci;
+(flask-env-py3)python3 manage.py db init;
+(flask-env-py3)python3 manage.py db migrate;
+(flask-env-py3)python3 manage.py db upgrade;
+(flask-env-py3)python3 manage.py create_cms_user -u zhaoming -p password -e yellowcrayon@126.com
+(flask-env-py3)python3 manage.py create_role
+(flask-env-py3)python3 manage.py add_user_to_role -e yellowcrayon@126.com -n "开发者"
+```
+
+Install memcached 
+```
+#utils/dmcache.py (email&sms VRFY)
+sudo apt-get install memcached
+memcached -u root -m 32 -p 11211 -d
+# memcached将会以守护程序的形式启动 memcached(-u)root用户（-d），32M内存（-m 32），监听localhost的11211端口。
+sudo systemctl status memcached
+#enable when system boots
+sudo update-rc.d memcached enable
+```
+
+Install redis for celery
+```
+sudo add-apt-repository ppa:chris-lea/redis-server
+sudo apt-get update
+sudo apt-get install redis-server
+(flask-env-py3)project interpreter-- install redis
+(flask-env-py3)celery worker -A tasks.celery --loglevel=info
+```
+
+Test Application
+```
+python3 app.py
 app.run(host='0.0.0.0',port=5000)
 ```
-
-And repeat
-```
-until finished
-```
-
-And repeat
-```
-until finished
-```
-
-And repeat
-```
-until finished
-```
-
-And repeat
-```
-until finished
-```
-Creating a Python Virtual Environment
-```
-until finished
-```
-
-
 
 And repeat
 
