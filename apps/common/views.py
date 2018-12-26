@@ -25,7 +25,7 @@ def sms_captcha():
             from_='+14704129144',
             to='+86' + telephone,
         )
-        print('发送短信验证码为:', captcha)
+        print('发送短信验证码为:',captcha)
         dmcache.set(telephone, captcha)
         return restful.success()
     else:
@@ -41,7 +41,7 @@ def graph_captcha():
     out.seek(0)
     resp = make_response(out.read())
     resp.content_type = 'image/png'
-    print('生成图片验证码为:', text)
+    print('生成图片验证码为:',text)
     return resp
 
 @bp.route('/uptoken/')

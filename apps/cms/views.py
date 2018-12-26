@@ -360,3 +360,17 @@ def dbanner():
     db.session.delete(banner)
     db.session.commit()
     return restful.success()
+
+
+@bp.route('/dpost/', methods=['POST'])
+@login_required
+def dpost():
+    post_id = request.form.get('post_id')
+    post = PostModel.query.get(post_id)
+
+    if not post:
+        return restful.params_error(message='数据库中无此帖')
+
+    db.session.delete(post)
+    db.session.commit()
+    return restful.success()

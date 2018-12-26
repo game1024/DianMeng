@@ -18,6 +18,7 @@ class SignupForm(BaseForm):
 
         if sms_captcha != '1111':
             sms_captcha_mem = dmcache.get(telephone)
+
             if not sms_captcha_mem or sms_captcha_mem.lower() != sms_captcha.lower():
                 raise ValidationError('短信验证码错误Py')
 

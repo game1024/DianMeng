@@ -2,7 +2,7 @@
 {% from "common/_macros.html" import static %}
 
 {% block title %}
-    BBS登录
+    SignIn
 {% endblock %}
 
 {% block head %}
@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block h2_block %}
-    BBS账号登录
+    萌星人登录
 {% endblock %}
 
 {% block signbox %}
@@ -30,6 +30,6 @@
     </div>
     <div class="form-group">
         <a href="{{ url_for("front.signup") }}" class="signup-link">没有账号？立即注册</a>
-        <a href="#" class="resetpwd-link" style="float:right;">找回密码</a>
+        <a href="/" class="resetpwd-link" style="float:right;">找回密码</a>
     </div>
 {% endblock %}

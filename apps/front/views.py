@@ -5,6 +5,7 @@ from flask import (
     render_template,
     request,
     session,
+    redirect,
     url_for,
     g,
     abort
@@ -150,10 +151,12 @@ class SignupView(views.MethodView):
     def get(self):
         return_to = request.referrer
 
-        if return_to and return_to != request.url and safeutils.is_safe_url(return_to):
-            return render_template('front/front_signup.html', return_to = return_to)
-        else:
-            return render_template('front/front_signup.html')
+        # if return_to and return_to != request.url and safeutils.is_safe_url(return_to):
+        #     return render_template('front/front_signup.html', return_to = return_to)
+        # else:
+        #     return render_template('front/front_signup.html')
+
+        return render_template('front/front_signup.html')
 
     def post (self):
         form = SignupForm(request.form)
@@ -168,6 +171,7 @@ class SignupView(views.MethodView):
         else:
             print(form.get_error())
             return restful.params_error(message=form.get_error())
+
 
 class SigninView(views.MethodView):
     def get(self):
@@ -199,3 +203,11 @@ class SigninView(views.MethodView):
 
 bp.add_url_rule('/signup/', view_func=SignupView.as_view('signup'))
 bp.add_url_rule('/signin/', view_func=SigninView.as_view('signin'))
+
+
+@bp.route('/logout/')
+@login_required
+def logout():
+    del session[config.FRONT_USER_ID]
+    return_to = request.referrer
+    return render_template('front/front_signin.html', return_to=return_to)

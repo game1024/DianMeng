@@ -31,3 +31,35 @@ $(function () {
         });
     });
 });
+
+$(function () {
+    $(".remove-btn").click(function (event) {
+        event.preventDefault();
+        var self = $(this);
+        var tr  = self.parent().parent();
+        var post_id = tr.attr("data-id");
+        var url = "";
+
+        zlalert.alertConfirm({
+            "msg":"确定要删除这个帖子么?",
+            'confirmCallback': function (){
+                zlajax.post({
+                    'url':'/cms/dpost/',
+                    'data':{
+                        'post_id':post_id
+                    },
+                    'success': function (data){
+                        if(data['code'] == 200)
+                        {
+                            window.location.reload();
+                        }
+                        else
+                        {
+                            zlalert.alertInfo(data['message']);
+                        }
+                    }
+                })
+            }
+        });
+    });
+});
