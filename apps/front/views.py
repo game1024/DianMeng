@@ -156,7 +156,7 @@ class SignupView(views.MethodView):
         # else:
         #     return render_template('front/front_signup.html')
 
-        return render_template('front/front_signup.html')
+        return render_template('front/front_signin.html')
 
     def post (self):
         form = SignupForm(request.form)
