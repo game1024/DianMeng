@@ -34,7 +34,7 @@ def sms_captcha():
         dmcache.set(email, captcha)
         return restful.success()
     else:
-        return restful.params_error(message='客户端服务端sign不匹配!')
+        return restful.params_error(message='请检查邮件格式')
 
 @bp.route('/captcha/')
 def graph_captcha():

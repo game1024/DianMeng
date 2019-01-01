@@ -67,6 +67,38 @@ $(function(){
         var password2_input = $("input[name='password2']");
         var graph_captcha_input = $("input[name='graph_captcha']");
 
+        if (!email_input)
+        {
+            zlalert.alertInfoToast('请输入邮箱');
+            return;
+        }
+        if (!sms_captcha_input)
+        {
+            zlalert.alertInfoToast('输入不能为空');
+            return;
+        }
+        if (!username_input)
+        {
+            zlalert.alertInfoToast('输入不能为空');
+            return;
+        }
+        if (!password1_input)
+        {
+            zlalert.alertInfoToast('输入不能为空');
+            return;
+        }
+        if (!password2_input)
+        {
+            zlalert.alertInfoToast('输入不能为空');
+            return;
+        }
+        if (!graph_captcha_input)
+        {
+            zlalert.alertInfoToast('输入不能为空');
+            return;
+        }
+
+
         var email = email_input.val();
         var sms_captcha = sms_captcha_input.val();
         var username = username_input.val();
