@@ -249,7 +249,7 @@ def dboard():
 @bp.route('/fusers/')
 @permission_required(CMSPersmission.FRONTUSER)
 def fusers():
-    fusers_list = FrontUser.query.outerjoin(PostModel).add_columns(FrontUser.id, FrontUser.telephone, FrontUser.username, FrontUser.join_time).\
+    fusers_list = FrontUser.query.outerjoin(PostModel).add_columns(FrontUser.id, FrontUser.email, FrontUser.username, FrontUser.join_time).\
         add_columns(func.count(PostModel.author_id).label("post_count")).group_by(FrontUser.id)
 
     page = request.args.get(get_page_parameter(), type=int, default=1)

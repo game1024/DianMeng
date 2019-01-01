@@ -22,13 +22,15 @@ CMS_USER_ID = 'twethuWT'
 FRONT_USER_ID = 'xbvDAert'
 
 # MAIL qq
-MAIL_SERVER = "smtp.qq.com"
-MAIL_PORT = '587'
-# MAIL_USE_SSL = True
+MAIL_SERVER = "smtp.126.com"
+MAIL_PORT = '25'
 MAIL_USE_TLS = True
-MAIL_USERNAME = "2373223556@qq.com"
-MAIL_PASSWORD = "wdwmecqgbjacdicg"
-MAIL_DEFAULT_SENDER = "2373223556@qq.com"
+MAIL_USE_SSL = False
+MAIL_USERNAME = "yellowcrayon@126.com"
+MAIL_PASSWORD = "mail126"
+MAIL_DEFAULT_SENDER = "yellowcrayon@126.com"
+MAIL_DEBUG = True
+
 
 #SMS twilio
 ACCOUNT_SID = 'AC1cfb11fd6e3735e02616e92de9a731e0'

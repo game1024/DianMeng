@@ -151,20 +151,20 @@ class SignupView(views.MethodView):
     def get(self):
         return_to = request.referrer
 
-        # if return_to and return_to != request.url and safeutils.is_safe_url(return_to):
-        #     return render_template('front/front_signup.html', return_to = return_to)
-        # else:
-        #     return render_template('front/front_signup.html')
+        if return_to and return_to != request.url and safeutils.is_safe_url(return_to):
+            return render_template('front/front_signup.html', return_to = return_to)
+        else:
+            return render_template('front/front_signup.html')
 
-        return render_template('front/front_signin.html')
+        # return render_template('front/front_signin.html')
 
     def post (self):
         form = SignupForm(request.form)
         if form.validate():
-            telephone = form.telephone.data
+            email = form.email.data
             username = form.username.data
             password = form.password1.data
-            user = FrontUser(telephone=telephone, username = username, password = password)
+            user = FrontUser(email=email, username = username, password = password)
             db.session.add(user)
             db.session.commit()
             return restful.success()
@@ -183,19 +183,22 @@ class SigninView(views.MethodView):
 
     def post(self):
         form = SigninForm(request.form)
+
         if form.validate():
-            telephone = form.telephone.data
+            email = form.email.data
             password  = form.password.data
             remember = form.remeber.data
 
-            user = FrontUser.query.filter_by(telephone=telephone).first()
+
+            user = FrontUser.query.filter_by(email=email).first()
+
             if user and user.check_password(password):
                 session[config.FRONT_USER_ID] = user.id
                 if remember:
                     session.permanent = True
                 return restful.success()
             else:
-                return restful.params_error(message='手机号码或者密码错误!')
+                return restful.params_error(message='邮箱或者密码错误!')
 
         else:
             return restful.params_error(message=form.get_error())

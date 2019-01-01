@@ -6,6 +6,8 @@ import config
 from .forms import SMSCaptchaForm
 from utils.captcha import Captcha
 from io import BytesIO
+from tasks import send_mail
+import random, string
 
 bp = Blueprint("common", __name__, url_prefix='/c')
 
@@ -13,24 +15,26 @@ bp = Blueprint("common", __name__, url_prefix='/c')
 def sms_captcha():
     form = SMSCaptchaForm(request.form)
     if form.validate():
-        telephone = form.telephone.data
+        email = form.email.data
         captcha = Captcha.gene_num(number=4)
 
         #twilio client
-        client = Client(config.ACCOUNT_SID, config.AUTH_TOKEN)
+        # client = Client(config.ACCOUNT_SID, config.AUTH_TOKEN)
+        #
+        # message = client.messages \
+        #     .create(
+        #     body="Your DianMeng's verification code is:%s." %captcha,
+        #     from_='+14704129144',
+        #     to='+86' + telephone,
+        # )
 
-        message = client.messages \
-            .create(
-            body="Your DianMeng's verification code is:%s." %captcha,
-            from_='+14704129144',
-            to='+86' + telephone,
-        )
-        print('发送短信验证码为:',captcha)
-        dmcache.set(telephone, captcha)
+        send_mail.delay('来自萌星的验证码', [email], '你的注册验证码为:%s' % captcha)
+
+        print('发送邮件验证码为:',captcha)
+        dmcache.set(email, captcha)
         return restful.success()
     else:
-        return restful.params_error(message='Invalid phone number!')
-
+        return restful.params_error(message='客户端服务端sign不匹配!')
 
 @bp.route('/captcha/')
 def graph_captcha():

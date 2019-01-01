@@ -3,10 +3,12 @@ from wtforms import StringField, IntegerField
 from ..forms import BaseForm
 from wtforms.validators import Regexp,EqualTo,ValidationError, InputRequired
 from utils import dmcache
+from wtforms.validators import Email
 
 class SignupForm(BaseForm):
-    telephone = StringField(validators=[Regexp(r"1[345789]\d{9}",message='请输入正确格式的手机号码')])
-    sms_captcha = StringField(validators=[Regexp(r"\w{4}",message='4位短信验证码')])
+    email = StringField(validators=[Email(message='Invalid email format!'), InputRequired('Input sign up email!')])
+    # telephone = StringField(validators=[Regexp(r"1[345789]\d{9}",message='请输入正确格式的手机号码')])
+    sms_captcha = StringField(validators=[Regexp(r"\w{4}",message='4位邮件验证码')])
     username = StringField(validators=[Regexp(r".{2,20}",message='长度2到20')])
     password1 = StringField(validators=[Regexp(r"[0-9a-zA-Z_\.]{6,20}",message='密码6到20字母数字')])
     password2 = StringField(validators=[EqualTo("password1",message='两次输入的密码不一致')])
@@ -14,13 +16,13 @@ class SignupForm(BaseForm):
 
     def validate_sms_captcha(self,field):
         sms_captcha = field.data
-        telephone = self.telephone.data
+        email = self.email.data
 
         if sms_captcha != '1111':
-            sms_captcha_mem = dmcache.get(telephone)
+            sms_captcha_mem = dmcache.get(email)
 
             if not sms_captcha_mem or sms_captcha_mem.lower() != sms_captcha.lower():
-                raise ValidationError('短信验证码错误Py')
+                raise ValidationError('邮件验证码错误Py')
 
     def validate_graph_captcha(self,field):
         graph_captcha = field.data
@@ -31,7 +33,8 @@ class SignupForm(BaseForm):
                 raise ValidationError('图形验证码错误Py')
 
 class SigninForm(BaseForm):
-    telephone = StringField(validators=[Regexp(r"1[345789]\d{9}", message='请输入正确格式的手机号码！')])
+    email = StringField(validators=[Email(message='Invalid email format!'), InputRequired('Input sign in email!')])
+    # telephone = StringField(validators=[Regexp(r"1[345789]\d{9}", message='请输入正确格式的手机号码！')])
     password = StringField(validators=[Regexp(r"[0-9a-zA-Z_\.]{6,20}", message='请输入正确格式的密码！')])
     remeber = StringField()
 

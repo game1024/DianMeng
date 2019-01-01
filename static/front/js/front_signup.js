@@ -10,19 +10,28 @@ $(function(){
 
 $(function () {
     $("#sms-captcha-btn").click(function (event) {
+
         event.preventDefault();
         var self = $(this);
-        var telephone = $("input[name='telephone']").val();
-        if(!(/^1[345879]\d{9}$/.test(telephone))){
-            zlalert.alertInfoToast('Cellphone number is invalid！');
+        var email = $("input[name='email']").val();
+
+        if (!email)
+        {
+            zlalert.alertInfoToast('请输入邮箱');
             return;
         }
+        // if(!(/^1[345879]\d{9}$/.test(telephone))){
+        //     zlalert.alertInfoToast('Cellphone number is invalid！');
+        //     return;
+        // }
+
         var timestamp = (new Date).getTime();
-        var sign = md5(timestamp+telephone+"tewtweyuudssujk#&%ss");
+        var sign = md5(timestamp+email+"tewtweyuudssujk#&%ss");
+
         zlajax.post({
             'url': '/c/sms_captcha/',
             'data':{
-                'telephone': telephone,
+                'email': email,
                 'timestamp': timestamp,
                 'sign': sign
             },
@@ -30,14 +39,14 @@ $(function () {
                 if(data['code'] == 200){
                     zlalert.alertSuccessToast('Sent successful！');
                     self.attr("disabled",'disabled');
-                    var timeCount = 60;
+                    var timeCount = 10;
                     var timer = setInterval(function () {
                         timeCount--;
                         self.text(timeCount);
                         if(timeCount <= 0){
                             self.removeAttr('disabled');
                             clearInterval(timer);
-                            self.text('SMS Code');
+                            self.text('发送验证');
                         }
                     },1000);
                 }else{
@@ -51,14 +60,14 @@ $(function () {
 $(function(){
     $("#submit-btn").click(function(event){
         event.preventDefault();
-        var telephone_input = $("input[name='telephone']");
+        var email_input = $("input[name='email']");
         var sms_captcha_input = $("input[name='sms_captcha']");
         var username_input = $("input[name='username']");
         var password1_input = $("input[name='password1']");
         var password2_input = $("input[name='password2']");
         var graph_captcha_input = $("input[name='graph_captcha']");
 
-        var telephone = telephone_input.val();
+        var email = email_input.val();
         var sms_captcha = sms_captcha_input.val();
         var username = username_input.val();
         var password1 = password1_input.val();
@@ -68,7 +77,7 @@ $(function(){
         zlajax.post({
             'url': '/signup/',
             'data': {
-                'telephone': telephone,
+                'email': email,
                 'sms_captcha': sms_captcha,
                 'username': username,
                 'password1': password1,

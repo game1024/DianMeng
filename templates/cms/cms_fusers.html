@@ -14,7 +14,7 @@
     <table class="table table-bordered">
         <thread>
             <tr>
-                <th>电话</th>
+                <th>注册邮箱</th>
                 <th>用户名</th>
                 <th>注册时间</th>
                 <th>文章数量</th>
@@ -24,7 +24,7 @@
         <tbody>
             {% for fuser in  fusers %}
                 <tr fuser-id ="{{ fuser.id }}">
-                    <td>{{ fuser.telephone  }} </td>
+                    <td>{{ fuser.email  }} </td>
                     <td>{{ fuser.username }} </td>
                     <td>{{ fuser.join_time }} </td>
                     <td>{{ fuser.post_count }} </td>
