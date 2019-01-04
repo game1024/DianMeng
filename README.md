@@ -44,32 +44,57 @@ source ~/.bashrc
 
 Install Mysql
 ```
-apt-get install mysql-server mysql-client
-apt-get install libmysqld-dev
-sudo mysql_secure_installation
+# 安装mysql服务
+sudo apt-get install mysql-server
+# 安装客户端
+sudo apt install mysql-client
+# 安装依赖
+sudo apt install libmysqlclient-dev
+# 检查状态
+sudo netstat -tap | grep mysql
 ```
 
 Config Mysql local
 ```
-mysql -uroot -p
-use msyql
-set global validate_password_policy=0;
-set global validate_password_length=4;
-update user set authentication_string=PASSWORD("xxxxx") where user='root';
-update user set plugin="mysql_native_password";
-flush privileges;
-quit
+$ sudo su
+# mysql
+mysql>
+mysql> select user, plugin from mysql.user;
++------------------+-----------------------+
+| user             | plugin                |
++------------------+-----------------------+
+| root             | auth_socket           |
+| mysql.session    | mysql_native_password |
+| mysql.sys        | mysql_native_password |
+| debian-sys-maint | mysql_native_password |
++------------------+-----------------------+
+4 rows in set (0.00 sec)
+mysql> update mysql.user set authentication_string=PASSWORD('123456'), plugin='mysql_native_password' where user='root';
+mysql> flush privileges;
+mysql> exit
+Bye
+# exit
+$ sudo /etc/init.d/mysql restart
+$ mysql -uroot -p
 ```
 
 Grant mysql remote access
 ```
-mysql -uroot -p  
-CREATE USER 'username'@'%' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON *.* TO 'username'@'%' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
-vi /etc/mysql/mysql.conf.d/mysqld.cnf
-comment the bind-address = 127.0.0.1
-sudo service mysql restart
+# 修改配置文件，注释掉bind-address = 127.0.0.1
+$ sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+
+# 保存退出，然后进入mysql服务，执行授权命令：
+$ mysql -uroot -p
+
+mysql> grant all on *.* to root@'%' identified by '123456' with grant option;
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+mysql> flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> exit
+Bye
+$ sudo /etc/init.d/mysql restart
 ```
 
 Get project from GitHub.
@@ -123,7 +148,6 @@ sudo add-apt-repository ppa:chris-lea/redis-server
 sudo apt-get update
 sudo apt-get install redis-server
 sudo service redis-server start
-(flask-env-py3)project interpreter-- install redis
 #Start worker as a back ground process
 (flask-env-py3)celery worker -A tasks.celery --loglevel=info -D
 ```
