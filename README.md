@@ -129,6 +129,7 @@ create database if not exists dianmeng default charset utf8 collate utf8_general
 (flask-env-py3)python3 manage.py create_cms_user -u zhaoming -p password -e yellowcrayon@126.com
 (flask-env-py3)python3 manage.py create_role
 (flask-env-py3)python3 manage.py add_user_to_role -e yellowcrayon@126.com -n "开发者"
+(flask-env-py3)python3 manage.py create_front_user -e yellowcrayon@126.com -u tillow -p 12345
 ```
 
 Install memcached 
