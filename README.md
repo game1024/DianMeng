@@ -4,7 +4,7 @@ www.dianmeng.us is a bbs of game development.
 
 ## Getting Started
 
-* It's developed with Falsk
+* It's developed with Flask
 * DB with mysql5.7.24 and redis.
 
 ### Prerequisites
