@@ -28,6 +28,7 @@ sudo apt-get install libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite
 Install Python3.6.7 
 ```
 apt-get install python3-pip
+pip3 install virtualenvwrapper
 pip3 -V
 ```
 
