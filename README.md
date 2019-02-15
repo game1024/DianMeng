@@ -28,15 +28,15 @@ sudo apt-get install libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite
 Install pip3 
 ```
 apt-get install python3-pip
-pip3 install --upgrade pip
-pip3 install --upgrade setuptools
-pip3 -V
+pip install --upgrade pip
+pip install --upgrade setuptools
+pip -V
 ```
 
 Install Vitualenv then add the 3 lines to the bashrc.
 ```
-pip3 install virtualenvwrapper
-pip3 install --upgrade virtualenvwrapper
+pip install virtualenvwrapper
+pip install --upgrade virtualenvwrapper
 vim ~/.bashrc
 export WORKON_HOME=$HOME/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.6
