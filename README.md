@@ -1,6 +1,6 @@
 # DianMeng BBS
 
-www.dianmeng.us is a bbs of game development.
+www.dianmeng.us is a game development blog.
 
 ## Getting Started
 
@@ -258,6 +258,4 @@ systemctl status dianmeng
 ```
 
 ## Acknowledgments
-
-* ZhiLiao BBS
 * Vultr Open port 25 for smtp.
