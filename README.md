@@ -25,10 +25,11 @@ sudo apt-get install build-essential checkinstall
 sudo apt-get install libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
 ```
 
-Install Python3.6.7 
+Install pip3 
 ```
 apt-get install python3-pip
-pip3 install virtualenvwrapper
+pip3 install --upgrade pip
+pip3 install --upgrade setuptools
 pip3 -V
 ```
 
