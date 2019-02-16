@@ -168,7 +168,7 @@ Install uWSGI
 (flask-env-py3)apt-get install gcc
 (flask-env-py3)apt-get install python3-setuptools
 (flask-env-py3)apt-get install python3.6-dev
-(flask-env-py3)pip3 install uwsgi
+(flask-env-py3)pip install uwsgi
 ```
 
 Test uWSGI
