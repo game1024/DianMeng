@@ -156,9 +156,10 @@ sudo service redis-server start
 ```
 
 ## Running the tests
-
+```
 python3 app.py
 app.run(host='0.0.0.0',port=5000)
+```
 
 ## Deployment
 
