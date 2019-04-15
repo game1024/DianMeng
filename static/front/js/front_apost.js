@@ -4,14 +4,15 @@ $(document).ready(function() {
     height: 300,
     toolbar: [
         ['style', ['style']],
-        ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+        ['font', ['bold', 'italic', 'underline',  'clear']],
         ['fontname', ['fontname']],
         ['fontsize', ['fontsize']],
         ['color', ['color']],
         ['para', ['ol', 'ul', 'paragraph', 'height']],
         ['table', ['table']],
+        ['insert', ['link', 'picture', 'hr']],
         ['insert', ['link']],
-        ['view', ['undo', 'redo', 'fullscreen', 'codeview', 'help']]
+        ['view', ['undo', 'redo', 'fullscreen', 'codevie']]
     ]
   });
 });
