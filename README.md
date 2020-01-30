@@ -31,6 +31,12 @@ apt-get install python3-pip
 pip install --upgrade pip
 pip install --upgrade setuptools
 pip -V
+
+1、pip是python的包管理工具，pip和pip3版本不同，都位于Scripts\目录下：
+2、如果系统中只安装了Python2，那么就只能使用pip。
+3、如果系统中只安装了Python3，那么既可以使用pip也可以使用pip3，二者是等价的。
+4、如果系统中同时安装了Python2和Python3，则pip默认给Python2用，pip3指定给Python3用。
+5、重要：虚拟环境中，若只存在一个python版本，可以认为在用系统中pip和pip3命令都是相同的
 ```
 
 Install Vitualenv then add the 3 lines to the bashrc.
