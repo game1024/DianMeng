@@ -65,11 +65,11 @@ def add_user_to_role(email, name):
         print('%s邮箱没有这个用户!'%email)
 
 
-@manager.option('-t', '--telephone', dest='telephone')
+@manager.option('-e', '--email', dest='email')
 @manager.option('-u', '--username',  dest='username')
 @manager.option('-p', '--password',  dest='password')
-def create_front_user(telephone, username, password):
-    user = FrontUser(telephone=telephone, username=username, password=password)
+def create_front_user(email, username, password):
+    user = FrontUser(username=username, password=password,email=email, )
     db.session.add(user)
     db.session.commit()
 
