@@ -43,7 +43,7 @@ Install Vitualenv then add the 3 lines to the bashrc.
 ```
 pip install virtualenvwrapper
 pip install --upgrade virtualenvwrapper
-vim ~/.bashrc
+vim ~/.bashrc             ~当前登录用户的用户目录。 登录用户是chen  cd ~   代表的就是 /home/chen/
 export WORKON_HOME=$HOME/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.6
 source /usr/local/bin/virtualenvwrapper.sh
